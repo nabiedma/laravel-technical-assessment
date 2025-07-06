@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 use App\Http\Controllers\ActorsController;
+use App\Http\Controllers\StarWarsController;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -14,6 +16,7 @@ Route::view('dashboard', 'dashboard')
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/actors', [ActorsController::class, 'index'])->name('actors.index');
+    Route::get('/sw-api', [StarWarsController::class, 'index'])->name('sw.index');
 
     Route::redirect('settings', 'settings/profile');
 

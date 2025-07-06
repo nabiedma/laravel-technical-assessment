@@ -13,7 +13,8 @@
 
             <flux:navlist variant="outline">
                 <flux:navlist.group :heading="__('Platform')" class="grid">
-                    <flux:navlist.item icon="home" :href="route('actors.index')" :current="request()->routeIs('actors')" wire:navigate>{{ __('Actors') }}</flux:navlist.item>
+                    <flux:navlist.item icon="home" :href="route('actors.index')" :current="request()->routeIs('actors.index')" wire:navigate>{{ __('Actors') }}</flux:navlist.item>
+                    <flux:navlist.item icon="globe-alt" :href="route('sw.index')" :current="request()->routeIs('sw.index')" wire:navigate>{{ __('SW API') }}</flux:navlist.item>
                 </flux:navlist.group>
             </flux:navlist>
 
