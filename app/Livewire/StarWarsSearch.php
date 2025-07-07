@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use Exception;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 use Livewire\Component;
@@ -32,7 +33,7 @@ class StarWarsSearch extends Component
         try {
             $this->characters = $this->fetchStarWarsCharacters($this->search);
         } catch (\Exception $e) {
-            $this->error = "Failed to fetch people from the API. Please try again. Error: $e->getMessage()";
+            $this->error = "Failed to fetch people from the API. Please try again. Error: " . $e->getMessage();
             $this->characters = [];
         } finally {
             $this->isLoading = false;
