@@ -52,3 +52,102 @@ The application should:
 -   Build some test cases which mock the SW-API and confirm the search and display works there as intended
 
 You should use [Laravel Livewire](https://livewire.laravel.com/) for your views and actions.
+
+
+## Instructions for this repository
+
+This technical assesment was developed and finished following the requirements above. In this small instructions, I will indicate how you should use this repository and project to test and see if everything was accomplished.
+
+### Installation & Setup
+
+Follow these steps to set up and run the application:
+
+#### 1. Clone the Repository
+
+```bash
+git clone https://github.com/nabiedma/laravel-technical-assessment.git
+cd laravel-technical-assessment
+```
+
+#### 2. Install Dependencies
+
+```bash
+composer install
+```
+
+#### 3. Start the Development Environment
+
+```bash
+./vendor/bin/sail up -d
+```
+
+#### 4. Generate Application Key
+
+```bash
+./vendor/bin/sail artisan key:generate
+```
+
+#### 5. Run Database Migrations with Seeders
+
+```bash
+./vendor/bin/sail artisan migrate --seed
+```
+
+#### 6. Build Frontend Assets
+
+```bash
+./vendor/bin/sail npm run dev
+```
+
+### Access the Application
+
+Once all steps are completed, you can access the application at:
+
+```
+http://localhost
+```
+
+You can access the application pages using the example seeded user:
+
+```
+email: test@example.com
+password: password
+```
+
+In addition, you can use Laravel Authentication provided in the Laravel Starter Kit and create a new user through the ```/login``` page.
+
+### Running Tests
+
+To run the feature tests, execute:
+
+```bash
+./vendor/bin/sail artisan test --testsuite=Feature
+```
+
+*Note: Only feature tests are included in this assessment.*
+
+### Stopping the Application
+
+To stop the development environment:
+
+```bash
+./vendor/bin/sail down
+```
+
+### Side Notes
+
+When developing and solving this technical assesment, I encountered some interesting points and want to mention:
+
+- *When implementing the use of the Star Wars API, the provided URL for the API requests has an expired SSL certificate, this was making it imposible to make a request via the HTTP Facade from Laravel, since it needs the request to be safe via CURL options.
+Just to For Production: Never disable SSL verification in production environments. This is only acceptable for development/testing.*
+
+What we did was to add the withOptions method to the HTTP get request, with the option 'verify' set to ```false```:
+
+```php
+$response = Http::withOptions([
+                'verify' => false,
+                'timeout' => 10,
+            ])->get('http://swapi.dev/api/people/', [
+                'search' => $query
+            ]);
+```
